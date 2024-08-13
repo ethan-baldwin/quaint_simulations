@@ -1,9 +1,9 @@
-
 ml ms
 ml Seq-Gen
+ml IQ-TREE
 ml ASTER/1.16-GCC-11.3.0
 
-ms 15 500 -T -I 6 3 2 3 2 3 2 \
+ms 16 500 -T -I 6 3 3 3 3 3 1 \
 -ej 1 2 1 -ej 1 4 3 -ej 2 5 1 -ej 3 3 1 -ej 4 6 1 \
 -em 0.5 1 5 0.5 | \
 tail -n +4 | grep -v // |  grep -v ^$ > gene_trees_m.tre
@@ -14,28 +14,17 @@ COUNTER=1
 while read LINE; do
   echo $LINE > trees/${COUNTER}.tre
   seq-gen -l 1000 -s 0.1 -m GTR trees/${COUNTER}.tre > seqs/seqs_${COUNTER}.phy
-  # cd est_trees
-  # iqtree2 -s ../seqs/seqs_${COUNTER}.phy -m MFP -B 1000 --prefix $COUNTER
-  # cd ..
+  cd est_trees
+  iqtree2 -s ../seqs/seqs_${COUNTER}.phy -m MFP -B 1000 --prefix $COUNTER
+  cd ..
   COUNTER=$((COUNTER + 1))
 done < gene_trees_m.tre
 
 cat est_trees/*treefile > merged_est.tre
 cat trees/*tre > merged_sim.tre
 
-astral -i merged_sim.tre -o astral.sim.tre --root 15
-astral -i merged_est.tre -o astral.est.tre --root 15
-
-
-COUNTER=1
-while read LINE; do
-  echo $LINE > trees/${COUNTER}.tre
-  seq-gen -l 1000 -s 0.1 -m GTR trees/${COUNTER}.tre > seqs/seqs_${COUNTER}.phy
-  cd est_trees
-  iqtree2 -s ../seqs/seqs_${COUNTER}.phy -m MFP -B 1000 --prefix $COUNTER
-  cd ..
-  COUNTER=$((COUNTER + 1))
-done < gene_trees_m.tre
+astral -i merged_sim.tre -o astral.sim.tre --root 16
+astral -i merged_est.tre -o astral.est.tre --root 16
 
 # seq-gen -l 1000 -s 0.1 -m GTR gene_trees_m.tre > seqs_m.phy
 
