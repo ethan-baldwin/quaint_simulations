@@ -12,8 +12,8 @@ tail -n +4 | grep -v // |  grep -v ^$ > gene_trees_m.tre
 
 COUNTER=1
 while read LINE; do
-  echo $LINE > trees/${COUNTER}.tre
-  seq-gen -l 1000 -s 0.1 -m GTR trees/${COUNTER}.tre > seqs/seqs_${COUNTER}.phy
+  # echo $LINE > trees/${COUNTER}.tre
+  # seq-gen -l 1000 -s 0.1 -m GTR trees/${COUNTER}.tre > seqs/seqs_${COUNTER}.phy
   cd est_trees
   iqtree2 -s ../seqs/seqs_${COUNTER}.phy -m MFP -B 1000 --prefix $COUNTER
   cd ..
