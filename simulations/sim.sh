@@ -33,7 +33,7 @@ astral -i merged_est.tre -o astral.est.tre --root 16
 ####### shorter times ######
 ms 16 500 -T -I 6 3 3 3 3 3 1 \
 -ej .1 2 1 -ej .1 4 3 -ej .2 5 1 -ej .3 3 1 -ej .4 6 1 \
--em 0.5 1 5 0.5 | \
+-em 0.05 1 5 5 | \
 tail -n +4 | grep -v // |  grep -v ^$ > gene_trees_m.tre
 
 COUNTER=1
@@ -54,7 +54,7 @@ astral -i merged_est.tre -o astral.est.tre --root 16
 
 #### no migration ####
 ms 16 500 -T -I 6 3 3 3 3 3 1 \
--ej 1 2 1 -ej 1 4 3 -ej 2 5 1 -ej 3 3 1 -ej 4 6 1 |\
+-ej .1 2 1 -ej .1 4 3 -ej .2 5 1 -ej .3 3 1 -ej .4 6 1 | \
 tail -n +4 | grep -v // |  grep -v ^$ > gene_trees.tre
 
 # while read LINE; do echo $LINE > trees/${COUNTER}.tre; COUNTER=$((COUNTER + 1)); done < gene_trees_m_no_blanks.tre
