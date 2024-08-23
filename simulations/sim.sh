@@ -36,20 +36,20 @@ ms 16 500 -T -I 6 3 3 3 3 3 1 \
 -em 0.05 1 5 5 | \
 tail -n +4 | grep -v // |  grep -v ^$ > gene_trees_m.tre
 
-COUNTER=1
-while read LINE; do
-  echo $LINE > trees/${COUNTER}.tre
-  seq-gen -l 1000 -s 0.1 -m GTR trees/${COUNTER}.tre > seqs/seqs_${COUNTER}.phy
-  # cd est_trees
-  # iqtree2 -s ../seqs/seqs_${COUNTER}.phy -m MFP -B 1000 --prefix $COUNTER
-  # cd ..
-  COUNTER=$((COUNTER + 1))
-done < gene_trees_m.tre
+# COUNTER=1
+# while read LINE; do
+#   echo $LINE > trees/${COUNTER}.tre
+#   seq-gen -l 1000 -s 0.1 -m GTR trees/${COUNTER}.tre > seqs/seqs_${COUNTER}.phy
+#   # cd est_trees
+#   # iqtree2 -s ../seqs/seqs_${COUNTER}.phy -m MFP -B 1000 --prefix $COUNTER
+#   # cd ..
+#   COUNTER=$((COUNTER + 1))
+# done < gene_trees_m.tre
+#
+# cat est_trees/*treefile > merged_est.tre
+# cat trees/*tre > merged_sim.tre
 
-cat est_trees/*treefile > merged_est.tre
-cat trees/*tre > merged_sim.tre
-
-astral -i merged_sim.tre -o astral.sim.tre --root 16
+astral -i gene_trees.tre -o astral.sim.tre --root 16
 astral -i merged_est.tre -o astral.est.tre --root 16
 
 #### no migration ####
